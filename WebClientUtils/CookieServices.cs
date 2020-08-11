@@ -1,10 +1,10 @@
 
 using System;
-using System.Collections. Generic;
+using System.Collections.Generic;
 using System.Linq;
-using System. Text;
+using System.Text;
 using System.Net;
-using System. Net.Security;
+using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Collections;
 using System.Configuration;
@@ -80,14 +80,14 @@ namespace WebClientUtils
 		public int GetSMCookie(ref string CookieName, out string CookieVa1,out string CookieDomain, out string CookieURIs)
 		{
 			CookieVal = "";
-			CookieURIs = "":
-			CookieDomain "";
+			CookieURIs = "";
+			CookieDomain = "";
 			if (_protocol.Length <= 0 || _host.Length <= 0 || _port.Length <= 0 || _path.Length <= 0 )
 			{
 				WriteCookielog("ERROR: URL Details are not set. Cookie can not be retrieved.");
 				return -1;
 			}
-			int nRetVal - 1;
+			int nRetVal = 1;
 			
 			try 
 			{
@@ -96,19 +96,19 @@ namespace WebClientUtils
 				int nPort = -1;
 				Int32.TryParse(_port, out nPort);
 
-				UriBuilder uriBuilder new UriBuilder(protocol, host, nPort, path);
+				UriBuilder uriBuilder = new UriBuilder(protocol, host, nPort, path);
 				string myUrl = uriBuilder.Uri. ToString();
 				uriBuilder - null;
 					
 				//WriteCookielLog("URI Path: (0}", myUrl);
-				HttpWebResponse myWebResponse null;
+				HttpWebResponse myWebResponse = null;
 				try
 				{
 					// Set the Callback for Certificate Errors
-					ServicePointManager.ServerCertificateValidationCallback new RemoteCertificateValidationCallback(ValidateServerCertificate);
+					ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
 
 					HttpStatusCode stCode = HttpStatusCode.OK;
-					ICredentials myCred - null;
+					ICredentials myCred = null;
 					if ( _LogonRequired ) // If explicit log-on is required, then do not use the default credentials
 					{
 						//if (GetAuthenticatedUser() 1- "Unknown")
@@ -119,7 +119,7 @@ namespace WebClientUtils
 					bool bEnd = false;
 					int nAttempts = 0;
 					
-					while ( IbEnd && nAttempts++ <- AIN_MAX_LOGIN ATTEMPTS )
+					while ( IbEnd && nAttempts++ <- MAX_LOGIN_ATTEMPTS )
 					{
 
 						WriteCookielog("********");
@@ -168,7 +168,7 @@ namespace WebClientUtils
 
 								case HttpStatusCode.OK:
 								{
-									WriteLog("This Page is not protected and is successfully accessed. "):
+									WriteLog("This Page is not protected and is successfully accessed. ");
 
 									Writelog("Cookie is not required. Creating a dummy cookie file.");
 									nRetVal = 0;
@@ -215,7 +215,7 @@ namespace WebClientUtils
 							else
 							{
 
-								WriteLog("\NHTTP Response Received from server was null ({0})\nException Status: {1}", e.Message, e.Status);
+								WriteLog("HTTP Response Received from server was null ({0})\nException Status: {1}", e.Message, e.Status);
 								bEnd = true;
 								nRetVal = 1;
 							}
@@ -228,7 +228,7 @@ namespace WebClientUtils
 								myWebResponse.Close();
 								myWebResponse = null;
 							}
-							myWebRequest null;
+							myWebRequest = null;
 						}
 					};
 				}
@@ -244,20 +244,33 @@ namespace WebClientUtils
 					ServicePointManager.ServerCertificateValidationCallback = null;
 
 
-					// Release resources of response object. 					if ( null != myWebResponse)
-					{ 						myWebResponse.Close(); 						myWebResponse = null;
+					// Release resources of response object.					if ( null != myWebResponse)
+					{						myWebResponse.Close();						myWebResponse = null;
 					}
 				}
-			} 			catch ( Exception e)
+			}			catch ( Exception e)
 			{
- 				Console.Write(e.Message); 				WriteLog("Exception ((0})", e.Message); 				nRetVal = -2;
-			} 			
+				Console.Write(e.Message);				WriteLog("Exception ((0})", e.Message);				nRetVal = -2;
+			}			
 			return nRetVal;
 		}
- 		/// <summary> 		/// Gets the SM cookie from the SM server for the given End Point URI. 		/// /summary> 		/// <param name="EndpointUri">URI of the End Point http://wwww.my.com/abc/svcname/ </param> 		/// <param name="EndpointContractliame">liame of the contract used by this End Point which is defined in the App.config</param> 		/// <returns>Cookie string in the form "Hame-Value" example "SMSESSION=SomeSequenceOfChars...." </returns> 		static public string GetSmCookieForUri(string EndpointUri, string EndpointContractlame) 		{
-			//Cookie myNewCookie = new Cookie(cookieName, cookieVal, cookieURIs, cookieDomain); 			//myCookieCont.Add(myNewCookie); 			string sCookie = ""; 			// Get the Address from the Endpoint 			Uri oUri = new Uri(EndpointUri);
- 			string sWebAbsPath = nul1; 			
-			// Get the Path of the Application -Which is only the First Segment of the Absolute Path 			string[] segments = oUri.Segments;
+		/// <summary>		
+		/// Gets the SM cookie from the SM server for the given End Point URI.		
+		/// /summary>		
+		/// <param name="EndpointUri">URI of the End Point http://wwww.my.com/abc/svcname/ </param>		
+		/// <param name="EndpointContractliame">liame of the contract used by this End Point which is defined in the App.config</param>		
+		/// <returns>Cookie string in the form "Hame-Value" example "SMSESSION=SomeSequenceOfChars...." </returns>		
+		static public string GetSmCookieForUri(string EndpointUri, string EndpointContractlame)		
+		{
+			//Cookie myNewCookie = new Cookie(cookieName, cookieVal, cookieURIs, cookieDomain);			
+			//myCookieCont.Add(myNewCookie);			
+			string sCookie = "";			
+			
+			// Get the Address from the Endpoint			
+			Uri oUri = new Uri(EndpointUri);
+			string sWebAbsPath = null;			
+			// Get the Path of the Application -Which is only the First Segment of the Absolute Path			
+			string[] segments = oUri.Segments;
 			if ( segments.Length >= 2)
 			{
 				sWebAbsPath = segments[0] + segments[1];
@@ -336,7 +349,7 @@ namespace WebClientUtils
 				else
 					sRetVal =  sInput;
 			}
-			else sRetVal = ""
+			else sRetVal = "";
 			return sRetVal;
 		}
 
@@ -357,7 +370,7 @@ namespace WebClientUtils
 				strCookieName = "SMSESSION";
 		
 			opchCookieVal = "";
-			opchCookieDomain = "":
+			opchCookieDomain = "";
 			opchCookieURIs = "";
 
 			Char[] delimForCookies = { ',' };
@@ -370,15 +383,42 @@ namespace WebClientUtils
 					continue;
 
 				// Parse the Cookie for Name Value Pairs
-				Char[] delimForPairs { ';'};
-				Char[] delimForNameVal - { );
+				Char[] delimForPairs = { ';'};
+				Char[] delimForNameVal = { };
 				string strPath = "path";
 				string strDomain = "domain";
 
 
-				int nPairIndex = 0; 				string[] listNameValPairs = strCookie.Split(delimForPairs); 				IEnumerator myEnum = listNameValPairs.GetEnumerator(); 				foreach (string s in listNameValPairs) 				{		 					nPairIndex++; 					string[] newsplit = s.Split(delimForNameVal); 					if ((newsplit.Length == 2)) 					{	 						string sName= newsplit[0]; 						string sVal = newsplit[1]; 						sName = sName. Trim(); 						sVal = sVal.Trim(); 						if (sName.Equals(strCookieName, StringComparison.OrdinalIgnoreCase)) 						{ 							opchCookieVal = sVal;
-						} 						else if (sName.Equals(strPath, StringComparison.OrdinalIgnoreCase)) 						{ 							opchCookieURIs = sVal; 						}
-						else if (sName. Equals(strDomain, StringComparison.OrdinalIgnoreCase)) 						{ 							// NOTE: As per RFC 2109 (http://www.ietf.org/rfc/rfc2109.txt), 							// '.' Is required at the beginning of the Domain Refer Section 4.3.2 of RFC 2019 							// RFC 2109 is superceded by RFC 2965 (http://www.ietf.org/rfc/rfc2965. txt)in October 200 							string strDot = "."; 							if ((sVal.Length > 0) && !(sVal.StartsWith(strDot))) 								opchCookieDomain = sVal.Insert(0, strDot); 							else 								opchCookieDomain = sVal; 
+				int nPairIndex = 0;				
+				string[] listNameValPairs = strCookie.Split(delimForPairs);				
+				IEnumerator myEnum = listNameValPairs.GetEnumerator();				
+				foreach (string s in listNameValPairs)				
+				{							
+					nPairIndex++;					
+					string[] newsplit = s.Split(delimForNameVal);					
+					if ((newsplit.Length == 2))					{							
+						string sName= newsplit[0];						
+						string sVal = newsplit[1];						
+						sName = sName. Trim();						
+						sVal = sVal.Trim();						
+						if (sName.Equals(strCookieName, StringComparison.OrdinalIgnoreCase))
+						{							
+							opchCookieVal = sVal;
+						}						
+						else if (sName.Equals(strPath, StringComparison.OrdinalIgnoreCase))			
+						{							
+							opchCookieURIs = sVal;						
+						}
+						else if (sName. Equals(strDomain, StringComparison.OrdinalIgnoreCase))	
+						{							
+							// NOTE: As per RFC 2109 (http://www.ietf.org/rfc/rfc2109.txt),	
+							// '.' Is required at the beginning of the Domain Refer Section 4.3.2 of RFC 2019							
+							// RFC 2109 is superceded by RFC 2965 (http://www.ietf.org/rfc/rfc2965. txt)in October 200							
+							string strDot = ".";							
+							if ((sVal.Length > 0) && !(sVal.StartsWith(strDot)))								
+								opchCookieDomain = sVal.Insert(0, strDot);							
+							else								
+								opchCookieDomain = sVal;
 						}
 					}
 				}
