@@ -72,7 +72,74 @@ namespace WebClientUtils
 
             cookieValue = ConfigServices.GetConfig().AppSettings.Settings["COOKIE_SERVICE_TYPE"].Value;
 
-            if ()
+            if (request.Properties.TryGetValue(HttpRequestMessageProperty.Name, out httpRequestMessageObject))
+            {
+                httpRequestMessage = httpRequestMessageObject as HttpRequestMessageProperty;
+                if (string.IsNullOrEmpty(httpRequestMessage.Headers["Cookie"]))
+                {
+                    if (cookieValue == "1")
+                    {
+                        SAMLService samlService =  new SAMLService();
+                        if (CookieList.Count == 0)
+                        {
+                            CookieList = samlService.GetSAMLCookieForUri(endPointAddress);
+                        }
+                        for (int i = 0; i < CookieList.Count; i++)
+                        {
+                            if (CookieList[i].Name.Contains("shib"))
+                            {
+                                string shibCookie = CookieList[i].Name + "=" + CookieList[i].Value;
+                                httpRequestMessage.Headers["Cookie"] = shibCookie;
+                            }
+                        }
+                    }
+                    else if (cookieValue == "0")
+                    {
+                        string smCookie = WebCookieServices.GetSmCookieForUri(endPointAddress, this.contractName);
+                        httpRequestMessage.Headers["Cookie"] = smCookie;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            else
+            {
+                if (cookieValue == "1")
+                {
+                    SAMLService samlService =  new SAMLService();
+                    httpRequestMessage = new HttpRequestMessageProperty();
+                    if (CookieList.Count == 0)
+                    {
+                        CookieList = samlService.GetSAMLCookieForUri(endPointAddress);
+                    }
+                    for (int i = 0; i < CookieList.Count; i++)
+                    {
+                        if (CookieList[i].Name.Contains("shib"))
+                        {
+                            string shibCookie = CookieList[i].Name + "=" + CookieList[i].Value;
+                            httpRequestMessage.Headers["Cookie"] = shibCookie;
+                        }
+                    }
+                    httpRequestMessage = new HttpRequestMessageProperty();
+                    request.Properties.Add(httpRequestMessageProperty.Name, httpRequestMessage);
+                }
+                else if (cookieValue == "0")
+                {
+                    string smCookie = WebCookieServices.GetSmCookieForUri(endPointAddress, this.contractName);
+                    HttpRequestMessageProperty httpRequestMessage = new HttpRequestMessageProperty();
+                    httpRequestMessage.Headers["Cookie"] = smCookie;
+                    request.Properties.Add(httpRequestMessageProperty.Name, httpRequestMessage);
+                }
+                else
+                {
+                    return null;
+                }
+                
+
+            }
+            return null;
         }
     }
 
