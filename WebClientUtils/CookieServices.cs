@@ -50,7 +50,7 @@ namespace WebClientUtils
 		string _port = "";
 		string _path = "";
 
-		public AINWebCookieServices(string Protocol, string Host, string Port, string Path)
+		public WebCookieServices(string Protocol, string Host, string Port, string Path)
 		{
 			_protocol = Protocol;
 			_host = Host;
@@ -61,7 +61,7 @@ namespace WebClientUtils
 		
 		public string GetAuthenticatedUser ()
 		{
-			return AINWebCredentialServices.GetAuthenticatedUser();
+			return WebCredentialServices.GetAuthenticatedUser();
 		}
 
 		public void WriteLog(string LogMsg, params object[] args) {}
@@ -113,7 +113,7 @@ namespace WebClientUtils
 					{
 						//if (GetAuthenticatedUser() 1- "Unknown")
 						{	
-							AINWebCredentialServices.SetAuthenticatedUser(Environment.UserName);
+							WebCredentialServices.SetAuthenticatedUser(Environment.UserName);
 						}
 					}
 					bool bEnd = false;
@@ -300,7 +300,7 @@ namespace WebClientUtils
 				string CookieName, CookieValue, CookieDomain, CookieUri;
 				Int64 CookieTimeout = 0;
 				GetCookieSettingsFromConfig(EndpointContractName, out CookieName, out CookieTimeout);
-				AINWebCookieServices objSrv = new AINWebCookieServices(oUri.Scheme, oUri.Host, ouri. Port. ToString(), sWebAbsPath);
+				WebCookieServices objSrv = new WebCookieServices(oUri.Scheme, oUri.Host, ouri. Port. ToString(), sWebAbsPath);
 
 				int nRet = objSrv.GetSMCookie(ref Cookielame, out Cookievalue, out CookieDomain, out CookieUri);
 				
@@ -443,14 +443,14 @@ namespace WebClientUtils
 			Configuration config  = ConfigServices.GetConfig();
 			if ( config != null )
 			{
-				WebClientSettingsConfigSection configSection = (WebClientSettingsConfigSection)config.GetSection("AINWebClientUtilsSettings");
+				WebClientSettingsConfigSection configSection = (WebClientSettingsConfigSection)config.GetSection("WebClientUtilsSettings");
 				if (configSection != null)
 				{
-					AINEndpointPropertiesElement oEpElem = configSection.AINEndpointPropertiesCollection[EndpointName];
+					EndpointPropertiesElement oEpElem = configSection.EndpointPropertiesCollection[EndpointName];
 					if (oEpElem != null)
 					{
-						AINEndpointPropertyElement oCookieNameElem = oEpElem["SiteMinderCookieName"];
-						AINEndpointPropertyElement oCookieTimeoutElem = oEpElem ["SiteMinderCookieTimeout"];
+						EndpointPropertyElement oCookieNameElem = oEpElem["SiteMinderCookieName"];
+						EndpointPropertyElement oCookieTimeoutElem = oEpElem ["SiteMinderCookieTimeout"];
 						if (oCookieNameElem != null)
 							CookieName = oCookieNameElem.Value;
 
