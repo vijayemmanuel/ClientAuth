@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.ServiceModel.Description;
 
-namespace WebClientUtils
+namespace WebClientUtils.EndpointBehaviorExtensionElement
 {
     public class SMEndpointBehaviorExtensionElement : BehaviorExtensionElement
     {
-        public SMEndpointBehaviourExtensionElement() {}
+        public SMEndpointBehaviorExtensionElement() {}
         public override Type BehaviorType
         {
             get {

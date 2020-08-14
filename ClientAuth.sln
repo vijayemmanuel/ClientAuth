@@ -2,12 +2,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project ("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClientUtils", "WebClientUtils/WebClientUtils.csproj", "{4E8E092A-8A97-4F75-B4B1-90A7CEF2A4FC}"
 EndProject
+Project ("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WsdlClient", "WsdlClient/WsdlClient.csproj", "{1F3DD724-4078-A58B-A58B-9CD21D24FA7E}"
+EndProject
 Global
     GlobalSection(SolutionConfigurationPlatforms) = preSolution
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
         {4E8E092A-8A97-4F75-B4B1-90A7CEF2A4FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {1F3DD724-4078-A58B-A58B-9CD21D24FA7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
     EndGlobalSection
     GlobalSection(SolutionProperties) = preSolution
         HideSolutionNode = FALSE
