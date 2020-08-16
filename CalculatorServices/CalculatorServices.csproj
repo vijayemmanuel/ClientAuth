@@ -5,11 +5,11 @@
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProductVersion>8.0.30703</ProductVersion>
         <SchemaVersion>2.0</SchemaVersion>
-        <ProjectGuid>{1F3DD724-4078-A58B-A58B-9CD21D24FA7E}</ProjectGuid>
+        <ProjectGuid>{82A55F95-FED1-4550-84C7-D95B46245C77}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>WebClient</RootNamespace>
-        <AssemblyName>WebClient</AssemblyName>
+        <RootNamespace>CalculatorServices</RootNamespace>
+        <AssemblyName>CalculatorServices</AssemblyName>
         <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <TargetFrameworkProfile />
@@ -34,7 +34,7 @@
 <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include-"System.Runtime.Searialization" />
+    <Reference Include-"System.configuration" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,19 +42,19 @@
     <Reference Include="System.Xml" />
     </ItemGroup>
 <ItemGroup>
-    <Compile Include="Calculator.cs" />
+    <Compile Include="CalculatorServices.cs" />
+    <Compile Include="Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
 </ItemGroup>
 <ItemGroup>
-    <ProjectReference Include="..\WebClientUtils\WebClientUtils.csproj">
+    <ProjectReference Include="..\WebClientUtils\WebClientUtils.csproj" >
         <Project>{4E8E092A-8A97-4F75-B4B1-90A7CEF2A4FC}</Project>
         <Name>WebClientUtils</Name>
     </ProjectReference>
-</ItemGroup>
-<ItemGroup>
-    <None Include="app.config">
-        <SubType>Designer</SubType>
-    </None>
+    <ProjectReference Include="..\WsdlClient\WsdlClient.csproj" >
+        <Project>{1F3DD724-4078-A58B-A58B-9CD21D24FA7E}</Project>
+        <Name>WsdlClient</Name>
+    </ProjectReference>
 </ItemGroup>
 <Import Project-"$(MSBuildToolsPath) \Microsoft.CSharp.targets" />
 <!-- To modify your build process, add your task inside one of the targets below and uncomment it.Other similar extension points exist, see Microsoft.Common.targets.
