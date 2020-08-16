@@ -41,7 +41,7 @@ namespace CalculatorServices
             }
         }
 
-        public static void StreamWriteline(sMessage)
+        public static void StreamWriteline(string sMessage)
         {
             try
             {
